@@ -18,7 +18,7 @@
 + 담기는 정보
 
   | 종류 | 설명 |
-      | :-: | --- |
+  | :-: | --- |
   | PID | 각 프로세스들을 식별하기 위한 고유 번호 |
   | 레지스터 값 | 실행을 재개할 때, 이전까지 사용한 레지스터 값들을 모두 복원 |
   | 프로세스 상태 | 대기, CPU 사용 중 등 현재 상태 |
@@ -53,7 +53,7 @@
 ---
 ## 10-2 프로세스 상태와 계층 구조
 ### 프로세스의 상태
-<img width="646" height="329" alt="Image" src="https://github.com/user-attachments/assets/d5baeb41-951e-4c6a-b4a7-85b5f9fbf459" />
+<img width="762" height="393" alt="Image" src="https://github.com/user-attachments/assets/8b3ad191-425c-4428-8b11-f133bba12177" />
 
 1. 생성 상태
     + 이제 막 메모리에 적재되어 PCB에 할당 받은 상태
@@ -75,7 +75,7 @@
     + PCB, 프로세스의 메모리 영역 정리함
 
 ### 프로세스의 계층 구조
-<img width="580" height="303" alt="Image" src="https://github.com/user-attachments/assets/9495d56f-072c-4aac-8386-043d35488f4c" />
+<img width="717" height="349" alt="Image" src="https://github.com/user-attachments/assets/54ee7460-4a70-4e1c-b37e-89d6c6efa81a" />
 
 > 프로세스 실행 도중 시스템 호출을 통해, 다른 프로세스 생성 가능
 >
@@ -87,7 +87,7 @@
 >
 > 다음의 내용은 윈도우 운영체제와는 상관이 없음!
 #### 프로세스 생성 단계
-<img width="577" height="437" alt="Image" src="https://github.com/user-attachments/assets/70371aa2-7f38-44bb-a05c-d0e5ec5629ac" />
+<img width="694" height="500" alt="Image" src="https://github.com/user-attachments/assets/c3a81535-f4eb-4faf-8071-96c74b513d14" />
 
 1. 부모가 **fork** 시스템 호출 (복제)
     + 복사본(=자식 프로세스) 생성 (부모와 다른 메모리 위치에)
@@ -108,14 +108,14 @@
     + 실행 흐름이 여러 개인 프로세스
     + 프로세스를 이루는 여러 명령어를 동시에 실행 가능하다.
 ### 스레드의 구성 요소
-<img width="354" height="346" alt="Image" src="https://github.com/user-attachments/assets/41982cc7-31c2-4e3c-9592-a839125c96dc" />
+<img width="414" height="403" alt="Image" src="https://github.com/user-attachments/assets/6913ca8d-0431-41f5-93f5-73746b7387ce" />
 
 + 스레드 실행에 필요한 최소한의 정보를 가지고 있음
 + ex) 스레드 ID, 프로그램 카운터(PC)를 비롯한 레지스터 값, 스택 ..
 > 각 스레드들은 해당 프로세스의 자원을 공유할 수 있음
 ### 멀티 프로세스 VS 멀티 스레드
 <p>
-<img width="462" height="366" alt="Image" src="https://github.com/user-attachments/assets/d471a83d-5b81-41fa-a8e3-47fb620bc6b1" />
+ <img width="546" height="420" alt="Image" src="https://github.com/user-attachments/assets/f4097f1b-07c0-45a3-be6a-1a4291da8142" />
  <em>둘 다 실행결과는 동일함</em>
 </p>
 
@@ -136,3 +136,6 @@
 + 즉, 같은 PCB를 공유함.
 + 각기 다른 스레드 ID, 프로그램 카운터 값을 포함한 레지스터 값, 스택을 가질 뿐!
 + 하나의 스레드에 문제가 발생하면, 다른 스레드들에게 영향을 줄 수 있음
+
+## 부록
+[spring boot + tomcat 환경에서의 스레드 분석](https://acoustic-pail-6b1.notion.site/Spring-Boot-Tomcat-2c6467146c9c80ebbf50faa7afdda01e?source=copy_link)
