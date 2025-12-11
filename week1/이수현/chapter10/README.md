@@ -138,3 +138,6 @@
 + 즉, 같은 PCB를 공유함.
 + 각기 다른 스레드 ID, 프로그램 카운터 값을 포함한 레지스터 값, 스택을 가질 뿐!
 + 하나의 스레드에 문제가 발생하면, 다른 스레드들에게 영향을 줄 수 있음
+
+## 부록
+[spring boot + tomcat 환경에서의 스레드 분석](https://acoustic-pail-6b1.notion.site/Spring-Boot-Tomcat-2c6467146c9c80ebbf50faa7afdda01e?source=copy_link)
