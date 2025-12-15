@@ -46,12 +46,14 @@
 #### 단점
   + 프로세스들이 기다리는 시간이 매우 길어질 수 있음 => **호위 효과**
   > 호위효과를 방지하려면? => SJF 스케줄링
+
 ### 2. 최단 작업 우선 스케줄링 (Shortest Job First)
 <img width="431" height="224" alt="Image" src="https://github.com/user-attachments/assets/55ba27b9-2adb-43bc-9996-afcc48158379" />
 
 + CPU 사용 시간이 가장 짧은 프로세스부터 처리하는 **비선점형** 스케줄링
 + CPU 사용이 긴 프로세스는 나중에 실행, CPU 사용 시간이 짧은 프로세스는 먼저 실행
 + 비선점으로 구분되지만, 선점으로도 구현될 수 있음.
+
 ### 3. **라운드 로빈 스케줄링** (Round Robin)
 <img width="456" height="251" alt="Image" src="https://github.com/user-attachments/assets/b04c4d6f-8430-41e4-9b31-eeb167ea67fc" />
 
@@ -61,11 +63,13 @@
   >
   > 타임 슬라이스의 크기에 따라, 스케줄링의 효율성이 결정됨.
 + 정해진 시간을 모두 사용하였는데도 아직 프로세스가 완료되지 않으면, 다시 큐의 맨 뒤에 삽입됨 => 문맥 교환!
+
 ### 4. 최소 잔여 시간 우선 스케줄링 (Shortest Remaining Time)
 + 정해진 시간만큼 CPU를 이용하되,
   다음으로 CPU를 사용할 프로세스로는 남은 작업 시간이 가장 적은 프로세스를 선택하는 
   **선점형** 스케줄링
 + SJF + RR 이라고 볼 수 있음
+
 ### 5. 우선순위 스케줄링 (Priority)
 <img width="366" height="215" alt="Image" src="https://github.com/user-attachments/assets/a5c1d5c4-cb8b-4c47-94ba-978c843335c6" />
 
@@ -79,6 +83,7 @@
   + **기아현상**: 우선순위가 낮은 프로세스는 준비 큐에 먼저 삽입되어도 **실행이 계속해서 연기**될 수 있음
   > 방지 기법: **에이징**
     >> 오랫동안 대기한 프로세스의 우선 순위를 점차 높이는 방식
+
 ### 6. 다단계 큐 스케줄링 (Multilevel Queue)
 <img width="371" height="194" alt="Image" src="https://github.com/user-attachments/assets/ff51e33c-f2d1-4673-b8bc-fc0a30833259" />
 
@@ -90,6 +95,7 @@
 #### 단점
   + 큐 간에 프로세스가 이동할 수 없음
   + 즉, 우선순위가 낮은 큐에 있는 프로세스는 계속해서 그곳에 머물러 실행이 연기됨 => 기아현상 발생 가능!
+
 ### 7. 다단계 피드백 큐 스케줄링 (Multilevel Feedback Queue)
 <img width="433" height="222" alt="Image" src="https://github.com/user-attachments/assets/0509235b-846b-471d-8219-9b932e11173a" />
 
