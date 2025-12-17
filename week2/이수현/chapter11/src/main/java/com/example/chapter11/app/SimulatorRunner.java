@@ -19,11 +19,17 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SimulatorRunner {
   private static final long DEFAULT_TICK_MILLIS = 2000L;
+  private static final String WRONG_ARG_ERROR = """
+                      사용법: <process_file> <algorithm> [--timeSlice=N]\
+                      
+                      예1) processes.txt fcfs\
+                      
+                      예2) processes.txt rr --timeSlice=3\s""";
 
   public void run(String[] args) throws Exception{
     // 실행할 스케줄러 생성
     RunConfig runConfig = parseArgs(args);
-    Scheduler scheduler = createScheduler(runConfig.schedulerType);
+    Scheduler scheduler = createScheduler(runConfig.schedulerType, runConfig.timeSlice);
 
     // 텍스트파일로부터 pcb 정보 가져오기
     List<Process> initialProcesses = loadInitialProcesses(runConfig.processFilePath);
@@ -36,21 +42,25 @@ public class SimulatorRunner {
     SimulationResult simulationResult = runSimulation(simulator, DEFAULT_TICK_MILLIS);
     printReport(simulationResult);
   }
-  private record RunConfig(String processFilePath, SchedulerType schedulerType) {}
+  private record RunConfig(String processFilePath, SchedulerType schedulerType, int timeSlice) {}
 
   private RunConfig parseArgs(String[] args){
     if (args == null || args.length < 2){
-      throw new IllegalArgumentException(
-              "사용법: <process_file> <algorithm>\n예) processes.txt fcfs"
-      );
+      throw new IllegalArgumentException(WRONG_ARG_ERROR);
     }
     String filePath = args[0];
     SchedulerType schedulerType = SchedulerType.from(args[1]);
-    return new RunConfig(filePath, schedulerType);
+    int timeSlice = 1;
+    for(String arg : args){
+      if(arg.startsWith("--timeSlice=")){
+        timeSlice = Integer.parseInt(arg.substring("--timeSlice=".length()));
+      }
+    }
+    return new RunConfig(filePath, schedulerType, timeSlice);
   }
 
-  private Scheduler createScheduler(SchedulerType schedulerType){
-    return SchedulerFactory.create(schedulerType);
+  private Scheduler createScheduler(SchedulerType schedulerType, int timeSlice){
+    return SchedulerFactory.create(schedulerType, timeSlice);
   }
 
   private List<Process> loadInitialProcesses(String filePath) throws Exception{

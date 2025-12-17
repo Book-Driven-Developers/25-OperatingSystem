@@ -120,9 +120,11 @@
 ## 11-3 스케줄링 구현 (JAVA)
 ### 1. 소스코드 실행 방법
 ```bash
-./gradlew bootRun --args="<process_file> <algorithm>"
-# 예)
+./gradlew bootRun --args="<process_file> <algorithm> [--timeSlice=N]"
+# 예1)
 ./gradlew bootRun --args="processes.txt fcfs"
+# 예2)
+./gradlew bootRun --args="processes.txt rr --timeSlice=3"
 ```
 
 ### 2. 입력값
