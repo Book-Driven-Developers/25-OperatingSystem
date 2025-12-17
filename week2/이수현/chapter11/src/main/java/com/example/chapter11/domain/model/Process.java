@@ -8,7 +8,8 @@ public class Process {
   private final long pid;
   private final int arrivalTime;  //도착 시간
   private final int burstTime; // 실행시간
-  private int remainingTime;
+  private int remainingTime; // PRIORITY, MQ, MFQ에서 사용
+  private int priority;
 
   // 실행 결과
   private Integer startTime;  //처음 CPU를 점유한 시간

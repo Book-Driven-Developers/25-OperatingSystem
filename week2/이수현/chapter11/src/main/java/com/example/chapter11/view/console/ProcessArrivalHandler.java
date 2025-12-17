@@ -21,7 +21,7 @@ public class ProcessArrivalHandler {
     }else{
       synchronized (futureArrivals){
         futureArrivals.add(process);
-        futureArrivals.sort(Comparator.comparingInt(Process::getArrivalTime));
+        //futureArrivals.sort(Comparator.comparingInt(Process::getArrivalTime));
       }
     }
   }
