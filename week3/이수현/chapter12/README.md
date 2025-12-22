@@ -9,7 +9,7 @@
 + 어떻게?
   + **실행 순서 제어**: 프로세스를 올바른 순서대로 실행
   + **상호 배제**: 동시에 접근해서는 안되는 자원에 하나의 프로세스만 접근하게 하기 
-### 실행 순서 제어를 위한 동기화
+### 1. 실행 순서 제어를 위한 동기화
 #### 필요한 이유: Reader Writer Problem
 <img width="310" height="215" alt="Image" src="https://github.com/user-attachments/assets/1dd62e26-14ab-44f8-95ea-d30458bbb3b7" />
 
@@ -18,9 +18,9 @@
   + Reader: Book.txt 파일에 저장된 값을 읽어들이는 프로세스
 + Reader, Writer 프로세스는 무작정 아무렇게나 실행되어선 안됨 -> 실행 순서가 있기 때문!
 + Reader 프로세스는 'Book.txt 안에 값이 존재한다'틑 특정 조건이 만족되어야만 실행 가능
-### 상호 배제를 위한 동기화
-+ 공유가 불가능한 자원의 동시 사용을 피하기 위한 동기화
-+ **한 번에 하나의 프로세스**만 접근해야 하는 자원에 동시 접근을 피하기 위한 동기화
+### 2. 상호 배제를 위한 동기화
+공유가 불가능한 자원의 동시 사용을 피하기 위한 동기화
+**한 번에 하나의 프로세스**만 접근해야 하는 자원에 동시 접근을 피하기 위한 동기화
 #### 필요한 이유: Back Account Problem
 <img width="478" height="257" alt="Image" src="https://github.com/user-attachments/assets/1a62cc37-9088-46bc-917a-bd6f068ed5b0" />
 
@@ -29,8 +29,8 @@
   + 프로세스A: 현재 잔액에 2만원을 추가하는 프로세스
   + 프로세스B: 현재 잔액에 5만을 추가하는 프로세스
 + 만약 동기화 없이 무작위로 프로세스들이 실행된다면?
-    -> 실행 결과: 둘다 잔액을 10만원으로 읽게 되어 최종적으로 잔액이 15만원이 될 수 있다.
-    -> why? 프로세스A의 자원에 대한 실행이 다 끝나기 전에 프로세스B가 해당 자원에 접근해서
+  + -> 실행 결과: 둘다 잔액을 10만원으로 읽게 되어 최종적으로 잔액이 15만원이 될 수 있다.
+  + -> why? 프로세스A의 자원에 대한 실행이 다 끝나기 전에 프로세스B가 해당 자원에 접근해서
 #### 필요한 이유: Producer & Consumer Problem
 <img width="554" height="238" alt="Image" src="https://github.com/user-attachments/assets/79cce9af-7969-4568-a3cc-84b529d05279" />
 
@@ -39,7 +39,7 @@
   + Consumer: 물건을 계속해서 소비하는 프로세스
   + '총합' 변수를 공유하고 있음
 + 만약 생산자를 100,000번, 소비자를 100,000번 실행하면 총합은?
-  -> 떄로는 0과 다른 값이 되거나 오류가 발생하기도 함
+  + -> 떄로는 0과 다른 값이 되거나 오류가 발생하기도 함
   <img width="561" height="157" alt="Image" src="https://github.com/user-attachments/assets/00ec897c-c85f-425b-a424-e94618e16a38" />
 
 #### 상호 배제를 위한 동기화를 위한 세가지 원칙
@@ -68,10 +68,11 @@
 + Back Account Problem, Producer & Consumer Problem 모두 레이스 컨디션 사례에 해당함
 <p>
 <img width="464" height="304" alt="Image" src="https://github.com/user-attachments/assets/24cf4feb-1fb8-4611-bef6-18fc307e2e9a" />
-<em>
+<em><br>
 고급언어로 작성된 한 줄짜리 코드라도, 저급언어로는 여러 줄로 변환될 수 있다. <br>
 이때 문맥교환이 발생하면, 자원의 일관성이 깨질 수 있음
 </em>
 </p>
 
+---
 ## 12-2 동기화 기법
