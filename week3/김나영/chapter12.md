@@ -229,3 +229,56 @@ public class ExternalApiService {
 - 조건에 따라 대기/알림이 필요한 경우
 - 복잡한 락 관리가 필요 없는 단일 JVM 환경에서 적합
 - synchronized 키워드를 통해 Java Monitor를 활용 가능
+
+# 스터디 피드백
+
+## lock을 걸지 못했을 때 vs wait()가 실행되었을 때
+
+### 1. lock을 걸지 못했을 때 (락 대기)
+- 상황
+  - 다른 스레드가 이미 락을 보유 중
+  - `synchronized` 진입 실패 또는 `lock()` 대기
+- 락 상태
+  - ❌ 락을 얻지 못함
+- 스레드 상태
+  - BLOCKED (synchronized 기준)
+- 대기 위치
+  - Entry List (락 대기 큐)
+- 특징
+  - 락이 풀리면 자동으로 경쟁에 참여
+  - 조건과 무관하게 “락만 풀리면” 진입 시도
+
+### 2. wait()가 실행되었을 때 (조건 대기)
+- 상황
+  - 락을 **이미 획득한 상태**에서
+  - 조건이 만족되지 않아 스스로 대기
+- 락 상태
+  - ⭕ wait() 호출과 동시에 락을 반납
+- 스레드 상태
+  - WAITING
+- 대기 위치
+  - Wait Set (조건 대기 큐)
+- 특징
+  - `notify()/notifyAll()`을 받아야 깨어남
+  - 깨어난 뒤에도 **다시 락 획득 경쟁 필요**
+  - 조건 충족 여부를 재확인해야 함 (while)
+
+## synchronized / ReentrantLock과의 관계
+
+- 위 차이는 `synchronized`와 `ReentrantLock`의 설계 방식 차이에서 비롯된다.
+
+- `synchronized`
+  - 락 대기와 조건 대기가 **JVM 모니터 구조에 고정**되어 있음
+  - 락을 얻지 못한 스레드는 Entry List에서 대기
+  - `wait()`를 호출한 스레드는 Wait Set에서 조건 대기
+  - 조건 대기 큐를 **분리해서 관리할 수 없음**
+
+- `ReentrantLock`
+  - 락 대기와 조건 대기를 **명시적으로 분리**해서 제공
+  - 락 대기는 Lock 내부 큐에서 관리
+  - 조건 대기는 `Condition` 객체별 대기 큐에서 관리 가능
+  - 여러 조건에 대해 **독립적인 대기/신호 처리**가 가능
+
+- 정리
+  - `synchronized`는 구조가 단순하지만 제어력이 낮고
+  - `ReentrantLock`은 설계가 복잡한 대신 동기화 제어가 세밀하다
