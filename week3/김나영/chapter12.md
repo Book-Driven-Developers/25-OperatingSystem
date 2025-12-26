@@ -176,3 +176,56 @@ wait와 signal 함수를 명시하는 것은 번거로운 일, 잘못 사용될 
 
 x.signal()을 호출하면 조견 변수 x에 대해 대기 상태에 있던 프로세스가 깨어나 모니터 안으로 다시 들어옴
 
+# Spring에서 동기화 기법 활용 방안
+## 뮤텍스
+- 같은 자원에 대한 재고 차감 / 쿠폰 발급 / 포인트 적립 등과 같은 **상태 변경**이 일어났을 때 
+- 같은 사용자/주문에 대해 한 번만 처리하여 **중복 요청 방지**
+- 특정 작업을 한 번에 하나만 돌리고 싶을 때
+- 스프링에서 ReentrantLock, synchronized 를 활용할 수 있음
+```
+Lock lock = new ReentrantLock();
+
+try {
+    lock.lock(); // 락 획득
+    // 임계 영역
+} finally {
+    lock.unlock(); // 락 해제
+}
+```
+## 세마포어
+- 외부 결제/문자/메일 API 호출을 동시 5건으로 제한
+- 이미지 처리/AI 추론 같은 고비용 작업 동시 실행 제한
+- DB 커넥션/스레드풀이 버티는 범위 내로 폭주 방지
+- 특정 엔드포인트(예: /export)가 몰리면 서버가 죽는 걸 막기
+- java.util.concurrent.Semaphore 활용 가능
+```
+import java.util.concurrent.Semaphore;
+
+@Service
+public class ExternalApiService {
+
+    // 동시에 최대 3개 요청만 허용
+    private final Semaphore semaphore = new Semaphore(3);
+
+    public void callExternalApi(int requestId) {
+        try {
+            semaphore.acquire(); // permit 획득 (없으면 대기)
+            System.out.println("요청 " + requestId + " 실행 시작");
+
+            // 외부 API 호출 시뮬레이션
+            Thread.sleep(2000);
+
+            System.out.println("요청 " + requestId + " 실행 종료");
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        } finally {
+            semaphore.release(); // permit 반납
+        }
+    }
+}
+```
+## 모니터
+- 객체 단위로 임계 영역을 간단하게 보호해야 하는 경우
+- 조건에 따라 대기/알림이 필요한 경우
+- 복잡한 락 관리가 필요 없는 단일 JVM 환경에서 적합
+- synchronized 키워드를 통해 Java Monitor를 활용 가능
