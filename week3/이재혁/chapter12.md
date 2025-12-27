@@ -157,7 +157,7 @@ void consume() {
 }
 ```
 
-![image.png](attachment:f04374d4-5c36-4bf9-b695-490c63b68ef4:image.png)
+![img.png](images02/img.png)
 
 이는 생산자 프로세스와 소비자 프로세스가 제대로 동기화되지 않았기 때문에 발생한 문제입니다.
 
