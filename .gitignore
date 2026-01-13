@@ -2,3 +2,7 @@
 .DS_Store
 .vscode
 ignore/
+*.pyc
+
+week6/김주왕/ch15_filesystem_notes/
+week6/김주왕/scripts/html_to_md.py
